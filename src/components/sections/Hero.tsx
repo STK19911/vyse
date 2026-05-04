@@ -68,24 +68,25 @@ export default function Hero({ t }: HeroProps) {
               onClick={() => setIsExpanded(false)}
               style={{
                 position: "fixed",
-                top: typeof window !== 'undefined' && window.innerWidth < 640 ? "6rem" : "2rem", 
-                right: typeof window !== 'undefined' && window.innerWidth < 640 ? "1.5rem" : "2rem",
-                zIndex: 99999,
+                // On descend le bouton pour ne pas chevaucher la Navbar si besoin
+                top: typeof window !== 'undefined' && window.innerWidth < 640 ? "7rem" : "3rem", 
+                right: typeof window !== 'undefined' && window.innerWidth < 640 ? "1.5rem" : "3rem",
+                zIndex: 100000, // Supérieur à la Navbar
                 cursor: "pointer",
-                background: "rgba(0,0,0,0.45)",
+                background: "rgba(0,0,0,0.6)",
                 border: "1px solid rgba(255,255,255,0.2)",
                 borderRadius: "50%",
-                width: "44px",
-                height: "44px",
+                width: "48px",
+                height: "48px",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 color: "white",
-                backdropFilter: "blur(8px)",
-                WebkitBackdropFilter: "blur(8px)",
+                backdropFilter: "blur(12px)",
+                WebkitBackdropFilter: "blur(12px)",
               }}
             >
-              <X size={20} strokeWidth={1.5} />
+              <X size={24} strokeWidth={2} />
             </motion.button>
           )}
         </AnimatePresence>,
@@ -95,9 +96,8 @@ export default function Hero({ t }: HeroProps) {
       <section
         className={`relative transition-all duration-700 ease-in-out ${
           isExpanded
-            ? "h-screen p-0"
-            // Modification ici : augmentation du padding horizontal (px-8)
-            : "h-[85vh] sm:h-[90vh] md:h-[92vh] py-2 px-8 pt-20 sm:pt-24"
+            ? "h-screen p-0 z-40" // Z-index inférieur à la Navbar (60)
+            : "h-[85vh] sm:h-[90vh] md:h-[92vh] py-2 px-8 pt-20 sm:pt-24 z-10"
         }`}
       >
         <motion.div
@@ -106,6 +106,7 @@ export default function Hero({ t }: HeroProps) {
             isExpanded ? "rounded-none" : "rounded-2xl sm:rounded-[3rem]"
           }`}
         >
+          {/* Zones de clic */}
           <div className={`absolute inset-0 z-30 flex ${isExpanded ? "pointer-events-none" : ""}`}>
             <div
               onClick={prevSlide}
@@ -135,7 +136,7 @@ export default function Hero({ t }: HeroProps) {
             >
               <div
                 className={`absolute inset-0 transition-colors duration-700 ${
-                  isExpanded ? "bg-black/25" : "bg-black/45"
+                  isExpanded ? "bg-black/30" : "bg-black/45"
                 }`}
               />
             </motion.div>
@@ -144,7 +145,7 @@ export default function Hero({ t }: HeroProps) {
           <div
             className={`relative z-40 flex h-full flex-col justify-end sm:justify-center pointer-events-none transition-all duration-700 ${
               isExpanded
-                ? "px-6 sm:px-12 md:px-32 pb-14 sm:pb-0"
+                ? "px-10 sm:px-16 md:px-32 pb-20 sm:pb-0"
                 : "px-5 sm:px-10 md:px-20 pb-14 sm:pb-0"
             }`}
           >
@@ -164,7 +165,7 @@ export default function Hero({ t }: HeroProps) {
               <h1
                 className={`max-w-5xl font-black text-white leading-[0.85] tracking-tighter uppercase transition-all duration-500 ${
                   isExpanded
-                    ? "text-[clamp(1.8rem,5vw,4.5rem)]"
+                    ? "text-[clamp(2.5rem,7vw,6.5rem)]"
                     : "text-[clamp(1.8rem,5vw,3.75rem)]"
                 }`}
               >
@@ -182,12 +183,12 @@ export default function Hero({ t }: HeroProps) {
             </motion.div>
           </div>
 
-          <div className="absolute bottom-5 sm:bottom-10 right-5 sm:right-10 flex gap-2 z-50 pointer-events-none">
+          <div className="absolute bottom-10 right-10 flex gap-3 z-50 pointer-events-none">
             {images.map((_, i) => (
               <div
                 key={i}
                 className={`h-1 transition-all duration-500 rounded-full ${
-                  i === index ? "w-6 sm:w-8 bg-[#CCFF00]" : "w-2 bg-white/20"
+                  i === index ? "w-10 bg-[#CCFF00]" : "w-3 bg-white/20"
                 }`}
               />
             ))}
